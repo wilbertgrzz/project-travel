@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hubungi Kami - Wilbert Travel</title>
+    <link rel="stylesheet" href="css/style 1.css">
+    <link rel="icon" href="img/854878.jpg">
+</head>
+<body class="bg-kontak">
+
+    <header>
+        <h1>Hubungi Wilbert Travel</h1>
+        <p>Punya pertanyaan atau siap merencanakan liburanmu? Kirim pesan sekarang!</p>
+    </header>
+
+    <nav>
+        <a href="index.html">Home</a> 
+        <a href="about.html">About & Gallery</a> 
+        <a href="paket.html">Paket Wisata</a>
+        <a href="kontak.html" class="active">Kontak</a>
+    </nav>
+
+    <main class="contact-container">
+        <section class="contact-card">
+            <h2>Kirim Pesan Ke Kami</h2>
+            <form action="#" method="POST" class="contact-form">
+                <div class="form-group">
+                    <label for="nama">Nama Lengkap</label>
+                    <input type="text" id="nama" placeholder="Masukkan nama Anda..." required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Alamat Email</label>
+                    <input type="email" id="email" placeholder="contoh@email.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="pesan">Pesan / Rencana Liburan</label>
+                    <textarea id="pesan" rows="5" placeholder="Tuliskan pertanyaan atau rencana destinasi impianmu di sini..." required></textarea>
+                </div>
+
+                <button type="submit" class="buy-btn form-submit">Kirim Sekarang 🚀</button>
+            </form>
+        </section>
+    </main>
+
+    <button id="scrollToTop" class="scroll-btn">↑</button>
+
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-left">
+                <p>© 2026 Jelajah Dunia Wilbert. All Rights Reserved.</p>
+            </div>
+            
+            <div class="footer-right">
+                <span>Ikuti kami di media sosial:</span>
+                <div class="social-links">
+                    <a href="https://instagram.com" target="_blank" class="social-item">Instagram</a>
+                    <a href="https://facebook.com" target="_blank" class="social-item">Facebook</a>
+                    <a href="https://tiktok.com" target="_blank" class="social-item">TikTok</a>
+                    <a href="https://wa.me/628123456789" target="_blank" class="social-item">WhatsApp</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+        <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const links = document.querySelectorAll("nav a");
+            const currentUrl = window.location.pathname.split('/').pop();
+
+            links.forEach(link => {
+                const linkPage = link.getAttribute("href");
+                if (currentUrl === linkPage || (currentUrl === "" && linkPage === "index.html")) {
+                    link.classList.add("active");
+                } else {
+                    link.classList.remove("active");
+                }
+
+                link.addEventListener("click", function (e) {
+                    if (this.getAttribute("href") && !this.getAttribute("href").startsWith("#")) {
+                        e.preventDefault();
+                        const targetUrl = this.href;
+                        document.body.classList.add("fade-out");
+                        setTimeout(() => { window.location.href = targetUrl; }, 400);
+                    }
+                });
+            });
+
+            const scrollBtn = document.getElementById("scrollToTop");
+
+            window.addEventListener("scroll", () => {
+                if (window.pageYOffset > 300) {
+                    scrollBtn.classList.add("show");
+                } else {
+                    scrollBtn.classList.remove("show");
+                }
+            });
+
+            scrollBtn.addEventListener("click", () => {
+                window.scrollTo({ top: 0, behavior: "smooth" });
+            });
+        });
+    </script>
+
+</body>
+</html>

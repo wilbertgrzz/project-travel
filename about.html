@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us & Gallery - Wilbert Travel</title>
+    <link rel="stylesheet" href="css/style 1.css">
+    <link rel="icon" href="img/854878.jpg">
+</head>
+
+<body class="bg-about">
+
+    <header>
+        <h1>Tentang Wilbert Travel</h1>
+        <p>Kisah kami dalam menghubungkan Anda dengan keindahan dunia</p>
+    </header>
+
+    <nav>
+        <a href="index.html">Home</a> 
+        <a href="about.html" class="active">About & Gallery</a> 
+        <a href="paket.html">Paket Wisata</a>
+        <a href="kontak.html">Kontak</a>
+    </nav>
+
+    <div class="about-wrapper">
+        
+        <main class="about-main">
+            <article class="story-section">
+                <h2>Cerita Perjalanan Kami</h2>
+                <p>Wilbert Travel didirikan dengan satu misi sederhana: memberikan pengalaman petualangan yang tak terlupakan bagi setiap traveler. Kami percaya bahwa setiap perjalanan adalah sebuah cerita berharga yang layak untuk dikenang selamanya.</p>
+                <p>Sejak tahun 2026, kami telah membantu ribuan penjelajah domestik maupun internasional untuk menginjakkan kaki di destinasi impian mereka, mulai dari tenangnya Danau Toba hingga eksotisnya pantai di Thailand.</p>
+            </article>
+
+            <section class="gallery-section">
+                <h2>Galeri Wisata Eksklusif</h2>
+                <div class="gallery-grid">
+                    <div class="gallery-item">
+                        <img src="img/danau-toba.webp" alt="Danau Toba">
+                        <div class="gallery-overlay"><span>Danau Toba</span></div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="img/new zealand.jfif" alt="New Zealand">
+                        <div class="gallery-overlay"><span>Queenstown</span></div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="img/pattaya beach.jpg" alt="Pattaya Beach">
+                        <div class="gallery-overlay"><span>Pattaya Beach</span></div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="img/galery1.webp" alt="galery1">
+                        <div class="gallery-overlay"><span>Galery1</span></div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <aside class="about-sidebar">
+            <div class="sidebar-box info-box">
+                <h3>🗓️ Event Travel 2026</h3>
+                <ul>
+                    <li><strong>Mei:</strong> Tur Festival Danau Toba</li>
+                    <li><strong>Juni:</strong> Promo Liburan Sekolah</li>
+                    <li><strong>Agustus:</strong> Tur Musim Panas Phuket</li>
+                    <li><strong>Desember:</strong> Promo Akhir Tahun 50%</li>
+                </ul>
+            </div>
+
+            <div class="sidebar-box promo-box">
+                <h3>🔥 PENAWARAN TERBATAS</h3>
+                <p>Dapatkan diskon potongan Rp 1.500.000 untuk pemesanan pertama Paket Wisata New Zealand!</p>
+                <a href="paket.html" class="buy-btn" style="text-align: center; display: block;">Cek Paket</a>
+            </div>
+        </aside>
+
+    </div>
+
+    <button id="scrollToTop" class="scroll-btn">↑</button>
+
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-left">
+                <p>© 2026 Jelajah Dunia Wilbert. All Rights Reserved.</p>
+            </div>
+            
+            <div class="footer-right">
+                <span>Ikuti kami di media sosial:</span>
+                <div class="social-links">
+                    <a href="https://instagram.com" target="_blank" class="social-item">Instagram</a>
+                    <a href="https://facebook.com" target="_blank" class="social-item">Facebook</a>
+                    <a href="https://tiktok.com" target="_blank" class="social-item">TikTok</a>
+                    <a href="https://wa.me/628123456789" target="_blank" class="social-item">WhatsApp</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const links = document.querySelectorAll("nav a");
+            const currentUrl = window.location.pathname.split('/').pop();
+
+            links.forEach(link => {
+                const linkPage = link.getAttribute("href");
+                if (currentUrl === linkPage || (currentUrl === "" && linkPage === "index.html")) {
+                    link.classList.add("active");
+                } else {
+                    link.classList.remove("active");
+                }
+
+                link.addEventListener("click", function (e) {
+                    if (this.getAttribute("href") && !this.getAttribute("href").startsWith("#")) {
+                        e.preventDefault();
+                        const targetUrl = this.href;
+                        document.body.classList.add("fade-out");
+                        setTimeout(() => { window.location.href = targetUrl; }, 400);
+                    }
+                });
+            });
+
+            const scrollBtn = document.getElementById("scrollToTop");
+
+            window.addEventListener("scroll", () => {
+                if (window.pageYOffset > 300) {
+                    scrollBtn.classList.add("show");
+                } else {
+                    scrollBtn.classList.remove("show");
+                }
+            });
+
+            scrollBtn.addEventListener("click", () => {
+                window.scrollTo({ top: 0, behavior: "smooth" });
+            });
+        });
+    </script>
+
+</body>
+</html>
