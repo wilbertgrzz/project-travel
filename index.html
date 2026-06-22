@@ -5,8 +5,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jelajah Dunia Bersama Wilbert</title>
-     <link rel="stylesheet" href="css/style 1.css">
+    <link rel="stylesheet" href="css/style 1.css">
     <link rel="icon" href="img/854878.jpg">
+    <style>
+        /* CSS khusus untuk Pop-up Modal Promo */
+        .promo-modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none; /* Disembunyikan dari awal */
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        .promo-modal-overlay.show {
+            display: flex;
+            opacity: 1;
+        }
+        .promo-modal-content {
+            background: linear-gradient(135deg, #ffffff 0%, #f0f2f5 100%);
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            max-width: 450px;
+            width: 90%;
+            position: relative;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+            border: 3px solid #f72585;
+            transform: scale(0.8);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            color: #212529;
+        }
+        .promo-modal-overlay.show .promo-modal-content {
+            transform: scale(1);
+        }
+        .close-modal {
+            position: absolute;
+            top: 15px; right: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #dc3545;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .close-modal:hover { transform: scale(1.2); }
+        .promo-modal-content h2 { color: #4361ee; margin-bottom: 15px; }
+        .promo-modal-content p { margin-bottom: 25px; font-weight: 500; }
+    </style>
 </head>
 
 <body class="bg-home">
@@ -207,6 +254,17 @@
         </div>
     </footer>
 
+    <!-- STRUKTUR HTML UNTUK POP-UP MODAL PROMO -->
+    <div id="promoModal" class="promo-modal-overlay">
+        <div class="promo-modal-content">
+            <span id="closeModal" class="close-modal">✖</span>
+            <h2>🎉 PROMO SPESIAL 2026!</h2>
+            <img src="img/new zealand.jfif" style="width: 100%; height: 150px; object-fit: cover; border-radius: 10px; margin-bottom: 15px;">
+            <p>Dapatkan diskon potongan hingga <strong>Rp 1.500.000</strong> untuk pemesanan Paket Wisata New Zealand khusus hari ini!</p>
+            <a href="paket.html" class="buy-btn" style="text-decoration: none; display: inline-block;">Ambil Diskon Sekarang</a>
+        </div>
+    </div>
+
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const links = document.querySelectorAll("nav a");
@@ -242,6 +300,33 @@
 
             scrollBtn.addEventListener("click", () => {
                 window.scrollTo({ top: 0, behavior: "smooth" });
+            });
+
+            // --- FITUR BARU: POP-UP PROMO OTOMATIS ---
+            const promoModal = document.getElementById('promoModal');
+            const closeModal = document.getElementById('closeModal');
+
+            // Set waktu agar pop-up muncul 1.5 detik setelah web selesai diload
+            setTimeout(() => {
+                promoModal.style.display = 'flex';
+                // Memberikan sedikit jeda sebelum menambahkan class show agar animasi opacity bekerja
+                setTimeout(() => {
+                    promoModal.classList.add('show');
+                }, 10);
+            }, 1500);
+
+            // Fungsi untuk menutup pop-up saat tombol 'X' ditekan
+            closeModal.addEventListener('click', () => {
+                promoModal.classList.remove('show');
+                setTimeout(() => { promoModal.style.display = 'none'; }, 400); // Tunggu animasi selesai
+            });
+
+            // Fungsi tambahan: Tutup pop-up jika area luar kotak di-klik
+            promoModal.addEventListener('click', (e) => {
+                if (e.target === promoModal) {
+                    promoModal.classList.remove('show');
+                    setTimeout(() => { promoModal.style.display = 'none'; }, 400);
+                }
             });
         });
     </script>

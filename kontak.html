@@ -24,24 +24,31 @@
     <main class="contact-container">
         <section class="contact-card">
             <h2>Kirim Pesan Ke Kami</h2>
-            <form action="#" method="POST" class="contact-form">
+            <form id="formKontak" action="#" method="POST" class="contact-form">
                 <div class="form-group">
                     <label for="nama">Nama Lengkap</label>
                     <input type="text" id="nama" placeholder="Masukkan nama Anda..." required>
+                    <div id="errorNama" style="color: #f72585; font-size: 0.9rem; margin-top: 5px;"></div>
                 </div>
 
                 <div class="form-group">
                     <label for="email">Alamat Email</label>
-                    <input type="email" id="email" placeholder="contoh@email.com" required>
+                    <input type="text" id="email" placeholder="contoh@email.com" required>
+                    <div id="errorEmail" style="color: #f72585; font-size: 0.9rem; margin-top: 5px;"></div>
                 </div>
 
                 <div class="form-group">
                     <label for="pesan">Pesan / Rencana Liburan</label>
                     <textarea id="pesan" rows="5" placeholder="Tuliskan pertanyaan atau rencana destinasi impianmu di sini..." required></textarea>
+                    <div id="errorPesan" style="color: #f72585; font-size: 0.9rem; margin-top: 5px;"></div>
                 </div>
 
                 <button type="submit" class="buy-btn form-submit">Kirim Sekarang 🚀</button>
             </form>
+            
+            <div id="pesanSukses" style="color: #4361ee; font-weight: bold; margin-top: 20px; text-align: center; display: none;">
+                Pesan berhasil dikirim! Kami akan segera menghubungi Anda.
+            </div>
         </section>
     </main>
 
@@ -65,8 +72,9 @@
         </div>
     </footer>
 
-        <script>
+    <script>
         document.addEventListener("DOMContentLoaded", () => {
+            // Animasi transisi halaman & scroll button
             const links = document.querySelectorAll("nav a");
             const currentUrl = window.location.pathname.split('/').pop();
 
@@ -89,7 +97,6 @@
             });
 
             const scrollBtn = document.getElementById("scrollToTop");
-
             window.addEventListener("scroll", () => {
                 if (window.pageYOffset > 300) {
                     scrollBtn.classList.add("show");
@@ -97,12 +104,55 @@
                     scrollBtn.classList.remove("show");
                 }
             });
-
             scrollBtn.addEventListener("click", () => {
                 window.scrollTo({ top: 0, behavior: "smooth" });
             });
+
+            const formKontak = document.getElementById('formKontak');
+            const namaInput = document.getElementById('nama');
+            const emailInput = document.getElementById('email');
+            const pesanInput = document.getElementById('pesan');
+            
+            const errorNama = document.getElementById('errorNama');
+            const errorEmail = document.getElementById('errorEmail');
+            const errorPesan = document.getElementById('errorPesan');
+            const pesanSukses = document.getElementById('pesanSukses');
+
+            formKontak.addEventListener('submit', function(event) {
+                event.preventDefault(); 
+
+                errorNama.textContent = '';
+                errorEmail.textContent = '';
+                errorPesan.textContent = '';
+                pesanSukses.style.display = 'none';
+
+                let isValid = true;
+                const nama = namaInput.value.trim();
+                const email = emailInput.value.trim();
+                const pesan = pesanInput.value.trim();
+
+                if (nama.length < 4) {
+                    errorNama.textContent = 'Nama harus diisi minimal 4 karakter.';
+                    isValid = false;
+                }
+
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    errorEmail.textContent = 'Format email tidak valid (contoh: nama@email.com).';
+                    isValid = false;
+                }
+
+                if (pesan === '') {
+                    errorPesan.textContent = 'Pesan tidak boleh kosong.';
+                    isValid = false;
+                }
+
+                if (isValid) {
+                    pesanSukses.style.display = 'block';
+                    formKontak.reset(); 
+                }
+            });
         });
     </script>
-
 </body>
 </html>

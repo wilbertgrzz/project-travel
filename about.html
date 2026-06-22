@@ -6,6 +6,67 @@
     <title>About Us & Gallery - Wilbert Travel</title>
     <link rel="stylesheet" href="css/style 1.css">
     <link rel="icon" href="img/854878.jpg">
+    <style>
+        /* CSS Khusus untuk Lightbox Gallery (Efek Zoom Gambar) */
+        .lightbox-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: none; 
+            justify-content: center;
+            align-items: center;
+            z-index: 99999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            cursor: zoom-out;
+        }
+        .lightbox-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+        .lightbox-img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 10px;
+            box-shadow: 0 0 30px rgba(255,255,255,0.2);
+            border: 4px solid white;
+            transform: scale(0.8);
+            transition: transform 0.3s ease;
+        }
+        .lightbox-overlay.active .lightbox-img {
+            transform: scale(1);
+        }
+        .gallery-item {
+            cursor: zoom-in; 
+        }
+
+        /* CSS Tambahan untuk Slider Testimoni di Sidebar */
+        .review-box {
+            text-align: center;
+        }
+        .review-box h3 {
+            color: #4895ef;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+        #testimonial-slider {
+            min-height: 100px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        #testi-text {
+            font-style: italic;
+            margin-bottom: 10px;
+            transition: opacity 0.5s ease;
+        }
+        #testi-author {
+            font-weight: bold;
+            color: #f72585;
+            transition: opacity 0.5s ease;
+        }
+    </style>
 </head>
 
 <body class="bg-about">
@@ -35,19 +96,19 @@
                 <h2>Galeri Wisata Eksklusif</h2>
                 <div class="gallery-grid">
                     <div class="gallery-item">
-                        <img src="img/danau-toba.webp" alt="Danau Toba">
+                        <img src="img/danau-toba.webp" alt="Danau Toba" class="zoomable">
                         <div class="gallery-overlay"><span>Danau Toba</span></div>
                     </div>
                     <div class="gallery-item">
-                        <img src="img/new zealand.jfif" alt="New Zealand">
+                        <img src="img/new zealand.jfif" alt="New Zealand" class="zoomable">
                         <div class="gallery-overlay"><span>Queenstown</span></div>
                     </div>
                     <div class="gallery-item">
-                        <img src="img/pattaya beach.jpg" alt="Pattaya Beach">
+                        <img src="img/pattaya beach.jpg" alt="Pattaya Beach" class="zoomable">
                         <div class="gallery-overlay"><span>Pattaya Beach</span></div>
                     </div>
                     <div class="gallery-item">
-                        <img src="img/galery1.webp" alt="galery1">
+                        <img src="img/galery1.webp" alt="galery1" class="zoomable">
                         <div class="gallery-overlay"><span>Galery1</span></div>
                     </div>
                 </div>
@@ -68,7 +129,16 @@
             <div class="sidebar-box promo-box">
                 <h3>🔥 PENAWARAN TERBATAS</h3>
                 <p>Dapatkan diskon potongan Rp 1.500.000 untuk pemesanan pertama Paket Wisata New Zealand!</p>
-                <a href="paket.html" class="buy-btn" style="text-align: center; display: block;">Cek Paket</a>
+                <a href="paket.html" class="buy-btn" style="text-align: center; display: block; text-decoration: none;">Cek Paket</a>
+            </div>
+
+            <!-- FITUR BARU: WIDGET TESTIMONI PELANGGAN -->
+            <div class="sidebar-box review-box">
+                <h3>⭐ Apa Kata Traveler?</h3>
+                <div id="testimonial-slider">
+                    <p id="testi-text">"Liburan ke Danau Toba bareng Wilbert Travel sangat berkesan. Servisnya juara!"</p>
+                    <span id="testi-author">- Budi Santoso</span>
+                </div>
             </div>
         </aside>
 
@@ -94,8 +164,14 @@
         </div>
     </footer>
 
+    <!-- ELEMEN KOSONG UNTUK LIGHTBOX -->
+    <div id="lightboxOverlay" class="lightbox-overlay">
+        <img id="lightboxImg" class="lightbox-img" src="">
+    </div>
+
     <script>
         document.addEventListener("DOMContentLoaded", () => {
+            // Transisi Halaman
             const links = document.querySelectorAll("nav a");
             const currentUrl = window.location.pathname.split('/').pop();
 
@@ -117,8 +193,8 @@
                 });
             });
 
+            // Scroll to Top
             const scrollBtn = document.getElementById("scrollToTop");
-
             window.addEventListener("scroll", () => {
                 if (window.pageYOffset > 300) {
                     scrollBtn.classList.add("show");
@@ -126,10 +202,59 @@
                     scrollBtn.classList.remove("show");
                 }
             });
-
             scrollBtn.addEventListener("click", () => {
                 window.scrollTo({ top: 0, behavior: "smooth" });
             });
+
+            // Lightbox Gallery
+            const images = document.querySelectorAll('.zoomable');
+            const lightboxOverlay = document.getElementById('lightboxOverlay');
+            const lightboxImg = document.getElementById('lightboxImg');
+
+            images.forEach(img => {
+                img.addEventListener('click', function() {
+                    const source = this.getAttribute('src');
+                    lightboxImg.setAttribute('src', source);
+                    lightboxOverlay.classList.add('active');
+                });
+            });
+
+            lightboxOverlay.addEventListener('click', () => {
+                lightboxOverlay.classList.remove('active');
+                setTimeout(() => {
+                    lightboxImg.setAttribute('src', '');
+                }, 300);
+            });
+
+            // --- FITUR BARU: JAVASCRIPT UNTUK SLIDER TESTIMONI ---
+            const testimonials = [
+                { text: '"Liburan ke Danau Toba bareng Wilbert Travel sangat berkesan. Servisnya juara!"', author: "- Budi Santoso" },
+                { text: '"Gak nyangka paket ke Phuket bisa semurah ini tapi fasilitas hotelnya bintang 4. Keren!"', author: "- Siti Aisyah" },
+                { text: '"Tour guide di New Zealand sangat ramah dan informatif. Bakal repeat order sih ini."', author: "- Reza Mahendra" }
+            ];
+
+            let currentIndex = 0;
+            const testiText = document.getElementById('testi-text');
+            const testiAuthor = document.getElementById('testi-author');
+
+            // Ganti testimoni setiap 4 detik (4000 ms)
+            setInterval(() => {
+                // 1. Efek Fade out
+                testiText.style.opacity = 0;
+                testiAuthor.style.opacity = 0;
+
+                // 2. Ganti teks setelah setengah detik (menunggu fade out selesai)
+                setTimeout(() => {
+                    currentIndex = (currentIndex + 1) % testimonials.length;
+                    testiText.textContent = testimonials[currentIndex].text;
+                    testiAuthor.textContent = testimonials[currentIndex].author;
+
+                    // 3. Efek Fade in kembali
+                    testiText.style.opacity = 1;
+                    testiAuthor.style.opacity = 1;
+                }, 500); 
+
+            }, 4000); 
         });
     </script>
 
